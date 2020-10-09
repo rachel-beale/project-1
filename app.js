@@ -1,88 +1,73 @@
-// const cells = Array.from(document.querySelectorAll('.cell'))
-// const purple = Array.from(document.querySelectorAll('.purple'))
-// console.log(purple)
-// console.log(cells[1])
-
 const grid = document.querySelector('.grid')
-const width = 4
+
+const width = 5
 const cells = []
-// let purple = []
-// let red = []
-// let blue = []
-
 const candyTypes = ['purple', 'red', 'blue']
-
-
 
 // creating the grid 
 for (let i = 0; i < width ** 2; i++) {
-  const tile = document.createElement('div')
-  tile.classList.add('cell')
-  grid.appendChild(tile)
-  cells.push(tile)
+  const div = document.createElement('div')
+  div.classList.add('cell')
+  grid.appendChild(div)
+  div.innerHTML = i
+  cells.push(div)
 }
+
+let colours = []
 
 // Creating the random grid 
 cells.forEach((cell) => {
-   const randomCandy = candyTypes[Math.floor(Math.random() * candyTypes.length)]
-    console.log(randomCandy) 
+  const randomCandy = candyTypes[Math.floor(Math.random() * candyTypes.length)]
+  colours.push((randomCandy))
   if (randomCandy === 'purple') {
-cell.classList.add('purple')
+    cell.classList.add('purple')
   } else if (randomCandy === 'red') {
     cell.classList.add('red')
-  } else { 
+  } else {
     cell.classList.add('blue')
   }
-
 })
 
+// let coloursArray = []
+// console.log(colours)
+// for (let i = 0; i < 5; i++) {
+//   console.log(colours[i])
+// coloursArray.push((colours[i]))
 
-
-//   if (candyToAdd === 'purple') {
-//     const purpleTile = cells[purple].classList.add('purple')
-//   } else if (candyToAdd === 'red') {
-//     const redTile = cells[red].classList.add('red')
-//   } else {
-//     const blueTile = cells[blue].classList.add('blue')
-//   }
-
-
-// console.log(candyToAdd)
 // }
-// randomGenerator()
+
+// console.log(coloursArray)
+
+// const purpler = ['purple', 'red', 'blue', 'purple', 'red', 'blue', 'purple', 'red', 'blue', 'purple', 'red', 'blue']
+// function indexOfAll(arr, val) {
+//   arr.reduce((acc, el, i) => (el === val ? [...acc, i] : acc), [])
+// }
+
+// if (cells.classList.)
+
+// Finding indexs of each colour 
+function findAllIndexOf(arr, el) {
+  return [].concat(...(function* () {
+    for (let i = 0; i < arr.length; i++) if (arr[i] === el) yield [i];
+  })());
+}
+blueArray = findAllIndexOf(colours, 'blue')
+// console.log(redArray = findAllIndexOf(colours, 'red'))
+// console.log(purpleArray = findAllIndexOf(colours, 'purple'))
+
+colouringArray = [1, 2, 3, 4, 5, 4, 8, 6]
+console.log(colouringArray)
+
+function checkingARow(arr) {
 
 
-// cells[purple].classList.add('purple')
-// purple -= 1
-// cells[purple].classList.add('purple')
-// purple -= width
-// cells[purple].classList.add('purple')
-// purple -= 1
-// cells[purple].classList.add('purple')
-// purple -= 1
-// cells[purple].classList.add('purple')
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i + 1] === arr[i] + 1 && arr[i + 2] === arr[i] + 2) {
+      console.log('yes')
+    } else {
+      console.log('error')
+    }
+  }
+}
 
-// cells[red].classList.add('red')
-// red += 1
-// cells[red].classList.add('red')
-// red += width 
-// cells[red].classList.add('red')
-// red -= 1
-// cells[red].classList.add('red')
-// red += width
-// cells[red].classList.add('red')
-
-
-// cells[blue].classList.add('blue')
-// blue += width
-// cells[blue].classList.add('blue')
-// blue -= 1
-// cells[blue].classList.add('blue')
-// blue += 1 
-// cells[blue].classList.add('blue')
-// blue -= width 
-// cells[blue].classList.add('blue')
-// blue += 1 
-// cells[blue].classList.add('blue')
-// blue += width
-// cells[blue].classList.add('blue')
+console.log(checkingARow([colouringArray]))
