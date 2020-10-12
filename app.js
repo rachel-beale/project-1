@@ -1,10 +1,16 @@
 const grid = document.querySelector('.grid')
 
-const width = 5
+const width = 9
 const cells = []
-const candyTypes = ['purple', 'red', 'blue']
+let frog = 76
+const lilypads = [2, 4, 6]
+const water = [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
+const logsRight = [24, 23, 22, 20, 19, 18]
+const logsLeft = [27, 28, 29, 31, 32, 34]
+const yellowCar = [55, 58, 61]
+const policeCar = [65, 68, 71]
 
-// creating the grid 
+// Creating the game grid
 for (let i = 0; i < width ** 2; i++) {
   const div = document.createElement('div')
   div.classList.add('cell')
@@ -13,61 +19,115 @@ for (let i = 0; i < width ** 2; i++) {
   cells.push(div)
 }
 
-let colours = []
+// Starting placement of grid element
+cells[frog].classList.add('frog')
 
-// Creating the random grid 
-cells.forEach((cell) => {
-  const randomCandy = candyTypes[Math.floor(Math.random() * candyTypes.length)]
-  colours.push((randomCandy))
-  if (randomCandy === 'purple') {
-    cell.classList.add('purple')
-  } else if (randomCandy === 'red') {
-    cell.classList.add('red')
-  } else {
-    cell.classList.add('blue')
+lilypads.forEach(lilypad => {
+  cells[lilypad].classList.add('lilypad')
+})
+yellowCar.forEach(yellowCarTile => {
+  cells[yellowCarTile].classList.add('yellowCar')
+})
+policeCar.forEach(policeCarTile => {
+  cells[policeCarTile].classList.add('policeCar')
+})
+logsRight.forEach(log => {
+  cells[log].classList.add('log')
+})
+logsLeft.forEach(log => {
+  cells[log].classList.add('log')
+})
+
+// Moving frog around the board
+document.addEventListener('keydown', (event) => {
+  const key = event.key
+  if (key === 'ArrowUp' && !(frog < width)) {
+    cells[frog].classList.remove('frog')
+    frog -= width
+    cells[frog].classList.add('frog')
+  } else if (key === 'ArrowDown' && !(frog > (width ** 2) - width - 1)) {
+    cells[frog].classList.remove('frog')
+    frog += width
+    cells[frog].classList.add('frog')
+  } else if (key === 'ArrowLeft' && !(frog % width === 0)) {
+    cells[frog].classList.remove('frog')
+    frog -= 1
+    cells[frog].classList.add('frog')
+  } else if (key === 'ArrowRight' && !(frog % width === width - 1)) {
+    cells[frog].classList.remove('frog')
+    frog += 1
+    cells[frog].classList.add('frog')
   }
 })
 
-// let coloursArray = []
-// console.log(colours)
-// for (let i = 0; i < 5; i++) {
-//   console.log(colours[i])
-// coloursArray.push((colours[i]))
-
-// }
-
-// console.log(coloursArray)
-
-// const purpler = ['purple', 'red', 'blue', 'purple', 'red', 'blue', 'purple', 'red', 'blue', 'purple', 'red', 'blue']
-// function indexOfAll(arr, val) {
-//   arr.reduce((acc, el, i) => (el === val ? [...acc, i] : acc), [])
-// }
-
-// if (cells.classList.)
-
-// Finding indexs of each colour 
-function findAllIndexOf(arr, el) {
-  return [].concat(...(function* () {
-    for (let i = 0; i < arr.length; i++) if (arr[i] === el) yield [i];
-  })());
+// Moving yellow car - to the right 
+function carRight() {
+  yellowCar.forEach(carRight => {
+    setInterval(() => {
+      if (cells[carRight] === cells[62]) {
+        clearInterval
+        cells[carRight].classList.remove('yellowCar')
+        carRight -= 9
+      } else {
+        cells[carRight].classList.remove('yellowCar')
+        carRight += 1
+        cells[carRight].classList.add('yellowCar')
+      }
+    }, 1000)
+  })
 }
-blueArray = findAllIndexOf(colours, 'blue')
-// console.log(redArray = findAllIndexOf(colours, 'red'))
-// console.log(purpleArray = findAllIndexOf(colours, 'purple'))
+carRight()
 
-colouringArray = [1, 2, 3, 4, 5, 4, 8, 6]
-console.log(colouringArray)
-
-function checkingARow(arr) {
-
-
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i + 1] === arr[i] + 1 && arr[i + 2] === arr[i] + 2) {
-      console.log('yes')
-    } else {
-      console.log('error')
-    }
-  }
+// Moving police car - to the left
+function carLeft() {
+  policeCar.forEach(carLeft => {
+    setInterval(() => {
+      if (cells[carLeft] === cells[63]) {
+        clearInterval
+        cells[carLeft].classList.remove('policeCar')
+        carLeft += 9
+      } else {
+        cells[carLeft].classList.remove('policeCar')
+        carLeft -= 1
+        cells[carLeft].classList.add('policeCar')
+      }
+    }, 1000)
+  })
 }
+carLeft()
 
-console.log(checkingARow([colouringArray]))
+// Moving the logs - to the right 
+function moveLogRight() {
+  logsRight.forEach(log => {
+    setInterval(() => {
+      if (cells[log] === cells[26]) {
+        clearInterval
+        cells[log].classList.remove('log')
+        log -= 9
+      } else {
+        cells[log].classList.remove('log')
+        log += 1
+        cells[log].classList.add('log')
+      }
+    }, 500)
+  })
+}
+moveLogRight()
+
+// Moving the logs - to the left 
+function moveLogLeft() {
+  logsLeft.forEach(log => {
+    setInterval(() => {
+      if (cells[log] === cells[27]) {
+        clearInterval
+        cells[log].classList.remove('log')
+        log += 9
+      } else {
+        cells[log].classList.remove('log')
+        log -= 1
+        cells[log].classList.add('log')
+      }
+    }, 500)
+  })
+}
+moveLogLeft()
