@@ -26,10 +26,55 @@ body {
 .cell {
   width: 50px;
   height: 50px;
-  border: 1px solid purple;
+  /* border: 1px solid purple; */
   font-size: 10px;
   display: flex;
+  background-color: #60aec9;
 
+}
+
+
+.lilypad {
+  width: 50px;
+  height: 50px;
+  background-image: url('lilypad.png');
+  background-size: 150%;
+}
+
+.yellowCar {
+  width: 50px;
+  height: 50px;
+  background-image: url('yellowCar.png');
+  background-size: cover;
+  padding: 1%
+}
+
+.policeCar {
+  width: 50px;
+  height: 50px;
+  background-image: url('policeCar.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.log {
+background-image: url('log.png');
+background-position: center;
+background-size: contain;
+}
+
+.grass {
+  background-color: lightgreen;
+}
+
+.roadPolice {
+  background-color: lightgrey;
+  border-bottom: 3px solid black;
+}
+.roadYellow {
+  background-color: lightgrey;
+  border-top: 3px solid black;
+  border-bottom: 3px dotted yellow;
 }
 
 .frog {
@@ -37,39 +82,6 @@ body {
   height: 50px;
   background-image: url('frog.png');
   background-size: contain;
+  /* background-position: center; */
   /* border: 1px solid gray */
 }
-
-.lilypad {
-  width: 50px;
-  height: 50px;
-  background-image: url('lilypad.png');
-  background-size: cover;
-}
-
-.yellowCar {
-  width: 50px;
-  height: 50px;
-  background-image: url('yellowCar.png');
-  background-size: contain;
-}
-
-.policeCar {
-  width: 50px;
-  height: 50px;
-  background-image: url('policeCar.png');
-  background-size: contain;
-}
-
-.log {
-background-color: brown;
-
-}
-
-.log2 {
-  background-color: grey;
-}
-
-/* .water {
-  background-color: lightseagreen;
-} */

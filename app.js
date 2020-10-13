@@ -1,16 +1,34 @@
 const grid = document.querySelector('.grid')
+const ScoreBoard = document.querySelector('.score')
+const livesLeft = document.querySelector('.lives')
+const startButton = document.querySelector('.start')
 
 const width = 9
 const cells = []
+
+let score = 0
+let lives = 3
 let frog = 76
+
 const lilypads = [2, 4, 6]
-const water = [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
 const logsRight = [24, 23, 22, 20, 19, 18]
 const logsLeft = [27, 28, 29, 31, 32, 34]
 const yellowCar = [55, 58, 61]
 const policeCar = [65, 68, 71]
+const grass = [9, 10, 11, 12, 13, 14, 15, 16, 17, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 72, 73, 74, 75, 76, 77, 78, 79, 80]
+const roadYellow = [54, 55, 56, 57, 58, 59, 60, 61, 62]
+const roadPolice = [63, 64, 65, 66, 67, 68, 69, 70, 71]
 
-// Creating the game grid
+let moveLogLeftInterval
+let moveLogRightInterval
+let policeCarInterval
+let yellowCarInterval
+let logLeftFrog
+
+let startGame = false
+// const endGame = true
+
+// ! Creating the game grid
 for (let i = 0; i < width ** 2; i++) {
   const div = document.createElement('div')
   div.classList.add('cell')
@@ -19,7 +37,7 @@ for (let i = 0; i < width ** 2; i++) {
   cells.push(div)
 }
 
-// Starting placement of grid element
+// ! Starting placement of grid element
 cells[frog].classList.add('frog')
 
 lilypads.forEach(lilypad => {
@@ -31,6 +49,7 @@ yellowCar.forEach(yellowCarTile => {
 policeCar.forEach(policeCarTile => {
   cells[policeCarTile].classList.add('policeCar')
 })
+
 logsRight.forEach(log => {
   cells[log].classList.add('log')
 })
@@ -38,96 +57,214 @@ logsLeft.forEach(log => {
   cells[log].classList.add('log')
 })
 
-// Moving frog around the board
-document.addEventListener('keydown', (event) => {
-  const key = event.key
-  if (key === 'ArrowUp' && !(frog < width)) {
-    cells[frog].classList.remove('frog')
-    frog -= width
-    cells[frog].classList.add('frog')
-  } else if (key === 'ArrowDown' && !(frog > (width ** 2) - width - 1)) {
-    cells[frog].classList.remove('frog')
-    frog += width
-    cells[frog].classList.add('frog')
-  } else if (key === 'ArrowLeft' && !(frog % width === 0)) {
-    cells[frog].classList.remove('frog')
-    frog -= 1
-    cells[frog].classList.add('frog')
-  } else if (key === 'ArrowRight' && !(frog % width === width - 1)) {
-    cells[frog].classList.remove('frog')
-    frog += 1
-    cells[frog].classList.add('frog')
-  }
+grass.forEach((grassTile => {
+  cells[grassTile].classList.add('grass')
+}))
+
+roadYellow.forEach(roadTile => {
+  cells[roadTile].classList.add('roadYellow')
 })
 
-// Moving yellow car - to the right 
+roadPolice.forEach(roadTile => {
+  cells[roadTile].classList.add('roadPolice')
+})
+
+// ! Moving frog around the board
+function frogMovement() {
+  document.addEventListener('keydown', (event) => {
+    if (!startGame) {
+      return
+    } else {
+      const key = event.key
+      if (key === 'ArrowUp' && !(frog < width)) {
+        cells[frog].classList.remove('frog')
+        frog -= width
+        cells[frog].classList.add('frog')
+      } else if (key === 'ArrowDown' && !(frog > (width ** 2) - width - 1)) {
+        cells[frog].classList.remove('frog')
+        frog += width
+        cells[frog].classList.add('frog')
+      } else if (key === 'ArrowLeft' && !(frog % width === 0)) {
+        cells[frog].classList.remove('frog')
+        frog -= 1
+        cells[frog].classList.add('frog')
+      } else if (key === 'ArrowRight' && !(frog % width === width - 1)) {
+        cells[frog].classList.remove('frog')
+        frog += 1
+        cells[frog].classList.add('frog')
+      }
+    }
+    gameOver()
+  })
+}
+console.log(startGame)
+
+// ! Moving yellow car - to the right 
 function carRight() {
-  yellowCar.forEach(carRight => {
-    setInterval(() => {
-      if (cells[carRight] === cells[62]) {
-        clearInterval
-        cells[carRight].classList.remove('yellowCar')
-        carRight -= 9
+  yellowCarInterval = setInterval(() => {
+    yellowCar.forEach((carRightMove, i) => {
+      if (carRightMove === 62) {
+        cells[carRightMove].classList.remove('yellowCar')
+        yellowCar[i] -= 8
+        cells[carRightMove -= 8].classList.add('yellowCar')
       } else {
-        cells[carRight].classList.remove('yellowCar')
-        carRight += 1
-        cells[carRight].classList.add('yellowCar')
+        cells[carRightMove].classList.remove('yellowCar')
+        yellowCar[i] += 1
+        cells[carRightMove += 1].classList.add('yellowCar')
       }
-    }, 1000)
-  })
+    })
+  }, 800)
 }
-carRight()
 
-// Moving police car - to the left
+// ! Moving police car - to the left
 function carLeft() {
-  policeCar.forEach(carLeft => {
-    setInterval(() => {
-      if (cells[carLeft] === cells[63]) {
-        clearInterval
-        cells[carLeft].classList.remove('policeCar')
-        carLeft += 9
+  policeCarInterval = setInterval(() => {
+    policeCar.forEach((carLeftMove, i) => {
+      if (carLeftMove === 63) {
+        cells[carLeftMove].classList.remove('policeCar')
+        policeCar[i] += 8
+        cells[carLeftMove += 8].classList.add('policeCar')
       } else {
-        cells[carLeft].classList.remove('policeCar')
-        carLeft -= 1
-        cells[carLeft].classList.add('policeCar')
+        cells[carLeftMove].classList.remove('policeCar')
+        policeCar[i] -= 1
+        cells[carLeftMove -= 1].classList.add('policeCar')
       }
-    }, 1000)
-  })
+    })
+  }, 1000)
 }
-carLeft()
 
-// Moving the logs - to the right 
+// ! Moving the logs - to the right - with the frog
 function moveLogRight() {
-  logsRight.forEach(log => {
-    setInterval(() => {
-      if (cells[log] === cells[26]) {
-        clearInterval
+  moveLogRightInterval = setInterval(() => {
+    logsRight.forEach((log, i) => {
+      if (log === 26) {
         cells[log].classList.remove('log')
-        log -= 9
+        logsRight[i] -= 8
+        cells[log -= 8].classList.add('log')
       } else {
         cells[log].classList.remove('log')
-        log += 1
-        cells[log].classList.add('log')
+        logsRight[i] += 1
+        cells[log += 1].classList.add('log')
       }
-    }, 500)
-  })
-}
-moveLogRight()
 
-// Moving the logs - to the left 
+      // }, 600)
+      // setInterval(() => {
+      //   if (frog >= 18 && frog < 26 && cells[frog].classList.contains('log')) {
+
+      //     cells[frog].classList.remove('frog')
+      //     frog += 1
+      //     cells[frog].classList.add('frog')
+      //   }
+
+    })
+  }, 599.8)
+}
+
+
+// ! Moving the logs - to the left - with the frog 
 function moveLogLeft() {
-  logsLeft.forEach(log => {
-    setInterval(() => {
-      if (cells[log] === cells[27]) {
-        clearInterval
+  moveLogLeftInterval = setInterval(() => {
+    logsLeft.forEach((log, i) => {
+      if (log === 27) {
         cells[log].classList.remove('log')
-        log += 9
+        logsLeft[i] += 8
+        cells[log += 8].classList.add('log')
       } else {
         cells[log].classList.remove('log')
-        log -= 1
-        cells[log].classList.add('log')
+        logsLeft[i] -= 1
+        cells[log -= 1].classList.add('log')
       }
     }, 500)
+    logLeftFrog = setInterval(() => {
+      if (frog >= 27 && frog < 36 && cells[frog].classList.contains('log')) {
+        cells[frog].classList.remove('frog')
+        frog -= 1
+        cells[frog].classList.add('frog')
+      }
+    })
+  }, 499.5)
+}
+
+
+
+// Start Button event listener - starts all movement on the page
+startButton.addEventListener('click', () => {
+  if (startGame) {
+    return
+  }
+  startGame = true
+  frogMovement()
+  carRight()
+  carLeft()
+  moveLogRight()
+  moveLogLeft()
+  frogCrashDetection()
+  gameOver()
+  frogOnLilypad()
+})
+
+// console.log(gameRunning)
+
+// Reset the frog to the starting point
+function resetFrog() {
+  cells[frog].classList.remove('frog')
+  frog = 76
+  cells[frog].classList.add('frog')
+  frogCrashDetection()
+}
+
+// Car crash detection 
+function frogCrashDetection() {
+  const frogCarCrash = setInterval(() => {
+    if (cells[frog].classList.contains('policeCar')
+      || cells[frog].classList.contains('yellowCar')) {
+      const newLives = lives -= 1
+      livesLeft.innerHTML = newLives
+      clearInterval(frogCarCrash)
+      resetFrog()
+    }
+  }, 300)
+}
+
+// Gain points - reaching a lilypad 
+function frogOnLilypad() {
+  lilypads.forEach(lilypad => {
+    if (cells[lilypad].classList.contains('frog')) {
+      // cells[frog].classList.remove('frog')
+      // frog = 76
+      console.log('working')
+      // cells[frog].classList.add('frog')
+      const newScore = score += 1
+      ScoreBoard.innerHTML = newScore
+      // frogOnLilypad()
+    } else {
+      console.log('testing')
+    }
   })
 }
-moveLogLeft()
+
+console.log(lilypads)
+function gameOver() {
+  if (lives === 0) {
+    console.log('dead')
+    startGame = false
+    clearInterval(policeCarInterval)
+    clearInterval(yellowCarInterval)
+    clearInterval(moveLogLeftInterval)
+    clearInterval(moveLogRightInterval)
+
+    score = 0
+    lives = 3
+
+    ScoreBoard.innerHTML = `${score}`
+    livesLeft.innerHTML = `${lives}`
+    resetFrog()
+
+    // cells[frog].classList.remove('frog')
+    // frog = 76
+    // cells[frog].classList.add('frog')
+
+  }
+}
+
+
