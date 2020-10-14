@@ -20,7 +20,8 @@ body {
 }
 
 .logo {
-  height: 240px;
+  display: flex;
+  height: 600px;
   width: 610px;
   background-image: url('images/frogger.png');
   background-size: contain;
@@ -32,6 +33,18 @@ body {
 h3 {
   padding: 10px 30px 30px 30px;
   margin: 0px;
+}
+
+.link {
+  display: flex;
+  width: 450px;
+  flex-direction: row;
+  justify-content: left;
+  /* align-items: flex-start; */
+}
+
+h5 {
+  justify-content: left;
 }
 
 .grid { 
@@ -105,20 +118,18 @@ background-size: contain;
 .frog {
   width: 50px;
   height: 50px;
-  background-image: url('images/frog.png');
+  background-image: url('images/froggy.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.water {
-  background-color: #60aec9;
-}
-
-.start {
+.start, #myBtn {
   margin: 10px;
+  width: 150px;
   background-color: #df949f;
   padding: 10px;
+  margin: 20px;
   border-radius: 4px;
   border: 3px solid black ;
   font-family: 'Share Tech Mono', monospace;
@@ -131,7 +142,64 @@ background-size: contain;
   background-color: white;
   position: absolute; 
   justify-content: center;
-align-items: center;
+  align-items: center;
   width: 50%;
   height: 20%;
 } 
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  /* background-color: rgb(0,0,0); /* Fallback color */
+  /* background-color: rgba(0,0,0,0.4); Black w/ opacity  */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #e4bebe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 5px solid white;
+  border-radius: 5px;
+  width: 550px; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:link {
+  color: blue;
+  text-decoration: none;
+}
+a:visited {
+  color: #050a05;;
+}
+a:hover {
+  color: #96c496;
+  text-decoration: underline;
+}
+a:active {
+  color: red;
+}
+
+
+

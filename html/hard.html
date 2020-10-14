@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <title>Frogger</title>
+</head>
+
+<body>
+
+  <div class="logo"></div>
+  <div class="points">
+    <h3 class="scoreboard"> score: <span class="score">0</span> </h3>
+    <h3 class="liveboard"> lives: <span class="lives">3</span> </h3>
+    <h3 class="timer"> Time Left: 30</h3>
+    <h3 class='highScore'>High Score!</h3>
+  </div>
+
+
+  <div class="grid">
+    <h1 class="gameover">GAME OVER <br>Score: </h1>
+  </div>
+
+  <div class='buttons'>
+    <button class="start">Start</button>
+
+    <!-- Trigger/Open The Modal -->
+    <button id="myBtn">How to play</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Some text in the Modal..</p>
+      </div>
+    </div>
+  </div>
+  <script src="/script/app.js"></script>
+
+</body>
+
+</html>

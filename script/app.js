@@ -4,7 +4,11 @@ const livesLeft = document.querySelector('.lives')
 const startButton = document.querySelector('.start')
 const gameEndDisplay = document.querySelector('.gameover')
 const timer = document.querySelector('.timer')
-const highScore = document.querySelector('.highScore')
+const highScoreDisplay = document.querySelector('.highScore')
+const highScore = JSON.parse(localStorage.getItem('highScore')) || []
+const modal = document.querySelector('#myModal')
+const btn = document.querySelector('#myBtn')
+const span = document.querySelector('.close')
 
 const width = 9
 const cells = []
@@ -12,9 +16,9 @@ const cells = []
 let score = 0
 let lives = 3
 let frog = 76
-let time = 10
+let time = 20
 
-const lilypads = [2, 4, 6]
+const lilypads = [1, 4, 7]
 const logsRight = [24, 23, 22, 20, 19, 18]
 const logsLeft = [27, 28, 29, 31, 32, 34]
 const yellowCar = [55, 58, 61]
@@ -28,6 +32,7 @@ let moveLogLeftInterval
 let moveLogRightInterval
 let policeCarInterval
 let yellowCarInterval
+let lilypadInterval
 let frogOnLog
 let gainingPoints
 let gameTimer
@@ -40,7 +45,7 @@ for (let i = 0; i < width ** 2; i++) {
   const div = document.createElement('div')
   div.classList.add('cell')
   grid.appendChild(div)
-  // div.innerHTML = i
+  div.innerHTML = i
   cells.push(div)
 }
 
@@ -81,8 +86,22 @@ roadPolice.forEach(roadTile => {
   cells[roadTile].classList.add('roadPolice')
 })
 
+// ! Modal - open and close 
+btn.addEventListener('click', () => {
+  modal.style.display = 'block'
+})
+
+span.addEventListener('click', () => {
+  modal.style.display = 'none'
+})
+
+window.addEventListener('click', (e) => {
+  if (e.target == modal) {
+    modal.style.display = 'none'
+  }
+})
+
 // ! Moving frog around the board
-// function frogMovement() {
 document.addEventListener('keydown', (event) => {
   if (!startGame) {
     return
@@ -108,9 +127,25 @@ document.addEventListener('keydown', (event) => {
   }
   gameOver()
 })
-// }
 
 // ! Moving yellow car - to the right 
+
+function moveLilypads() {
+  lilypadInterval = setInterval(() => {
+    lilypads.forEach((lilypad, i) => {
+      if (lilypad === 0) {
+        cells[lilypad].classList.remove('lilypad')
+        lilypads[i] += 8
+        cells[lilypad += 1].classList.add('lilypad')
+      } else {
+        cells[lilypad].classList.remove('lilypad')
+        lilypads[i] -= 1
+        cells[lilypad -= 1].classList.add('lilypad')
+      }
+    })
+  }, 500)
+}
+
 function carRight() {
   yellowCarInterval = setInterval(() => {
     yellowCar.forEach((carRightMove, i) => {
@@ -161,7 +196,6 @@ function moveLogRight() {
   }, 1000)
 }
 
-
 // ! Moving the logs - to the left 
 function moveLogLeft() {
   moveLogLeftInterval = setInterval(() => {
@@ -179,6 +213,7 @@ function moveLogLeft() {
   }, 1000)
 }
 
+// ! Moving the frog when it is on the log. 
 function frogLogMove() {
   frogOnLog = setInterval(() => {
     if (frog >= 27 && frog < 36 && cells[frog].classList.contains('log')) {
@@ -200,17 +235,19 @@ startButton.addEventListener('click', () => {
   }
   startGame = true
 
+  // Starting game timer
   gameTimer = setInterval(() => {
     time = time -= 1
     timer.innerHTML = `Time left ${time}`
     if (time === 0) {
       clearInterval(gameTimer)
     }
-    console.log(time)
   }, 1000)
 
+  // Starting all functions
   carRight()
   carLeft()
+  moveLilypads()
   moveLogRight()
   moveLogLeft()
   frogCrashDetection()
@@ -256,6 +293,7 @@ function frogOnLilypad() {
   }, 300)
 }
 
+// Message at the end of the game 
 function gameDisplay(message, delay) {
   gameEndDisplay.style.display = 'block'
   gameEndDisplay.innerHTML = message
@@ -265,12 +303,24 @@ function gameDisplay(message, delay) {
 
 }
 
+// Local Storage  
+function saveHighScore() {
+  highScore.push(score)
+  highScore.sort((a, b) => b.score = a.score)
+  highScore.splice(1)
+
+  highScoreDisplay.innerHTML = `Score to beat ${highScore}`
+  console.log(highScore)
+}
+
 function gameOver() {
   if (lives === 0 || time === 0) {
     startGame = false
+    saveHighScore()
     gameDisplay(`GAME OVER! <br> You scored ${score} points!`, 3000)
     clearInterval(policeCarInterval)
     clearInterval(yellowCarInterval)
+    clearInterval(lilypadInterval)
     clearInterval(moveLogLeftInterval)
     clearInterval(moveLogRightInterval)
     clearInterval(gainingPoints)
@@ -280,7 +330,7 @@ function gameOver() {
 
     score = 0
     lives = 3
-    time = 10
+    time = 20
 
     ScoreBoard.innerHTML = `${score}`
     livesLeft.innerHTML = `${lives}`
