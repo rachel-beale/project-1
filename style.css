@@ -7,81 +7,131 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   flex-direction: column;
   margin: 0; 
-  background-color: lightpink;
+  background-color: #df949f;
+  font-family: 'Share Tech Mono', monospace;
 }
 
+.points {
+  display: flex;
+  flex-direction: row;
+}
+
+.logo {
+  height: 240px;
+  width: 610px;
+  background-image: url('images/frogger.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 10px 0px 0px 0px;
+}
+
+h3 {
+  padding: 10px 30px 30px 30px;
+  margin: 0px;
+}
 
 .grid { 
   display: flex;
   flex-direction: row;
-  height: 450px;
-  width: 450px;
-  flex-wrap: wrap;
+  height: 470px;
+  width: 470px;
+  flex-wrap: wrap; 
   justify-content: center;
-  align-items: center;
+  align-items: center; 
+  border-radius: 5px;
+  border: 10px solid white;
 }
 
 .cell {
   width: 50px;
   height: 50px;
-  /* border: 1px solid purple; */
   font-size: 10px;
   display: flex;
   background-color: #60aec9;
 
 }
 
-
 .lilypad {
   width: 50px;
   height: 50px;
-  background-image: url('lilypad.png');
-  background-size: 150%;
+  background-image: url('/images/lilypad.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .yellowCar {
   width: 50px;
   height: 50px;
-  background-image: url('yellowCar.png');
-  background-size: cover;
-  padding: 1%
+  background-image: url('/images/yellowCar.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .policeCar {
   width: 50px;
   height: 50px;
-  background-image: url('policeCar.png');
-  background-size: cover;
+  background-image: url('/images/policeCar.png');
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
 }
 
 .log {
-background-image: url('log.png');
+background-image: url('images/log.png');
 background-position: center;
 background-size: contain;
 }
 
 .grass {
-  background-color: lightgreen;
+  background-color: #96c496;
 }
 
 .roadPolice {
   background-color: lightgrey;
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid #554e4e;
 }
 .roadYellow {
   background-color: lightgrey;
-  border-top: 3px solid black;
+  border-top: 3px solid #554e4e;
   border-bottom: 3px dotted yellow;
 }
 
 .frog {
   width: 50px;
   height: 50px;
-  background-image: url('frog.png');
+  background-image: url('images/frog.png');
   background-size: contain;
-  /* background-position: center; */
-  /* border: 1px solid gray */
+  background-repeat: no-repeat;
+  background-position: center;
 }
+
+.water {
+  background-color: #60aec9;
+}
+
+.start {
+  margin: 10px;
+  background-color: #df949f;
+  padding: 10px;
+  border-radius: 4px;
+  border: 3px solid black ;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.gameover {
+  display: flex;
+  display: none;
+  z-index: 1;
+  background-color: white;
+  position: absolute; 
+  justify-content: center;
+align-items: center;
+  width: 50%;
+  height: 20%;
+} 
