@@ -7,7 +7,6 @@ const timer = document.querySelector('.timer')
 const modal = document.querySelector('#myModal')
 const btn = document.querySelector('#myBtn')
 const span = document.querySelector('.close')
-const music = document.querySelector('.music')
 
 const highScoreDisplay = document.querySelector('.highScore')
 const highScore = JSON.parse(localStorage.getItem('highScore')) || []
@@ -236,9 +235,6 @@ startButton.addEventListener('click', () => {
   }
   gameRunning = true
 
-  music.src = '/sounds/arcade.music.mp3'
-  music.play()
-  
   // Starting game timer - inside the start button function 
   gameTimer = setInterval(() => {
     time = time -= 1

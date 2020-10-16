@@ -165,11 +165,11 @@ background-size: contain;
   z-index: 1;
   background-color: white;
   position: absolute; 
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  height: 20%;
-} 
+  align-items: center; 
+  width: 470px;
+  height: 80px;
+  padding: 10px;
+}  
 
 .modal {
   display: none;
@@ -186,14 +186,13 @@ background-size: contain;
 
 .modal-content {
   background-color: #e4bebe;
-  margin: 10% auto; /* 15% from the top and centered */
+  margin: 10% auto; 
   padding: 20px;
   border: 5px solid white;
   border-radius: 5px;
-  width: 550px; /* Could be more or less, depending on screen size */
+  width: 550px; 
 }
 
-/* The Close Button */
 .close {
   color: white;
   float: right;
@@ -221,6 +220,3 @@ a:hover {
 a:active {
   color: red;
 }
-
-
-

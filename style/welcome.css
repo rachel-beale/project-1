@@ -29,3 +29,15 @@ h3 {
   padding: 10px 30px 30px 30px;
   margin: 0px;
 }
+
+h3.hard {
+  margin-bottom: 30px;
+}
+
+footer {
+  padding-bottom: 0px;
+  background-image: url('/images/froggy.png');
+  background-size: contain;
+  height: 100px;
+  width: 100%;
+}
