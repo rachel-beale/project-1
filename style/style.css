@@ -23,7 +23,7 @@ body {
   display: flex;
   height: 50%;
   width: 50%;
-  background-image: url('/images/frogger.png');
+  background-image: url('../images/frogger.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -71,7 +71,7 @@ h5 {
 .lilypad {
   width: 50px;
   height: 50px;
-  background-image: url('/images/lilypad.png');
+  background-image: url('../images/lilypad.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -80,7 +80,7 @@ h5 {
 .bike {
   width: 50px; 
   height: 50px;
-  background-image: url('/images/bike.png');
+  background-image: url('../images/bike.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-image: center;
@@ -88,7 +88,7 @@ h5 {
 .yellowCar {
   width: 50px;
   height: 50px;
-  background-image: url('/images/yellowCar.png');
+  background-image: url('../images/yellowCar.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -97,14 +97,14 @@ h5 {
 .policeCar {
   width: 50px;
   height: 50px;
-  background-image: url('/images/policeCar.png');
+  background-image: url('../images/policeCar.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .log {
-background-image: url('/images/log.png');
+background-image: url('../images/log.png');
 background-position: center;
 background-size: contain;
 }
@@ -141,7 +141,7 @@ background-size: contain;
 .frog {
   width: 50px;
   height: 50px;
-  background-image: url('/images/froggy.png');
+  background-image: url('../images/froggy.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

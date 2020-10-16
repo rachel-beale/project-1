@@ -18,7 +18,7 @@ body {
   display: flex;
   height: 50%;
   width: 50%;
-  background-image: url('/images/frogger.png');
+  background-image: url('../images/frogger.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -36,7 +36,7 @@ h3.hard {
 
 footer {
   padding-bottom: 0px;
-  background-image: url('/images/froggy.png');
+  background-image: url('../images/froggy.png');
   background-size: contain;
   height: 100px;
   width: 100%;

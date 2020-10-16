@@ -23,7 +23,7 @@ body {
   display: flex;
   height: 50%;
   width: 50%;
-  background-image: url('/images/frogger-hard.png');
+  background-image: url('../images/frogger-hard.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -44,7 +44,6 @@ h3 {
   width: 450px;
   flex-direction: row;
   justify-content: left;
-  /* align-items: flex-start; */
 }
 
 h5 {
@@ -75,7 +74,7 @@ h5 {
 .lilypad {
   width: 50px;
   height: 50px;
-  background-image: url('/images/lilypad.png');
+  background-image: url('../images/lilypad.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -84,7 +83,7 @@ h5 {
 .bike {
   width: 50px; 
   height: 50px;
-  background-image: url('/images/bike.png');
+  background-image: url('../images/bike.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-image: center;
@@ -93,7 +92,7 @@ h5 {
 .snake {
   width: 50px;
   height: 50px;
-  background-image: url('/images/snake.png');
+  background-image: url('../images/snake.png');
   background-size:contain;
   background-repeat: no-repeat;
   background-image: center;
@@ -102,7 +101,7 @@ h5 {
 .yellowCar {
   width: 50px;
   height: 50px;
-  background-image: url('/images/yellowCar.png');
+  background-image: url('../images/yellowCar.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -111,20 +110,20 @@ h5 {
 .policeCar {
   width: 50px;
   height: 50px;
-  background-image: url('/images/policeCar.png');
+  background-image: url('../images/policeCar.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .log {
-background-image: url('/images/log.png');
+background-image: url('../images/log.png');
 background-position: center;
 background-size: contain;
 }
 
 .froglog {
-  background-image: url('/images/frogonlog.png');
+  background-image: url('../images/frogonlog.png');
   background-position: center;
   background-size: contain;
 }
@@ -161,7 +160,7 @@ background-size: contain;
 .frog {
   width: 50px;
   height: 50px;
-  background-image: url('/images/froggy.png');
+  background-image: url('../images/froggy.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
