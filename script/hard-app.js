@@ -151,19 +151,36 @@ function bikeLeft() {
     })
   }, 500)
 }
-// ! Moving police car - to the right 
-function carRight() {
-  policeCarInterval = setInterval(() => {
-    policeCar.forEach((carRightMove, i) => {
-      if (carRightMove === 54) {
-        policeCar[i] += 8
+
+
+//  ! Idea for a movement function - would mean do not need individual functions to move traffic & logs etc. 
+// Movement Function
+function movement(callIntervalName, cellArray, rowEnd, rowSize, numMove, time) {
+  callIntervalName = setInterval(() => {
+    cellArray.forEach((cellIndividual, i) => {
+      if (cellIndividual === rowEnd) {
+        cellArray[i] += rowSize
       } else {
-        policeCar[i] -= 1
+        cellArray[i] -= numMove
       }
     })
     renderGame()
-  }, 600)
+  }, time)
 }
+
+// ! Moving police car - to the right 
+// function carRight() {
+//   policeCarInterval = setInterval(() => {
+//     policeCar.forEach((carRightMove, i) => {
+//       if (carRightMove === 54) {
+//         policeCar[i] += 8
+//       } else {
+//         policeCar[i] -= 1
+//       }
+//     })
+//     renderGame()
+//   }, 600)
+// }
 
 // ! Moving yellow car - to the left
 function carLeft() {
@@ -246,7 +263,8 @@ startButton.addEventListener('click', () => {
 
   // Starting all functions to get the game moving, detect crashes & movement
   bikeLeft()
-  carRight()
+  // carRight()
+  movement(policeCarInterval, policeCar, 54, 8, 1, 600)
   carLeft()
   moveLogRight()
   moveLogLeft()

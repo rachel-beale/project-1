@@ -40,11 +40,11 @@ let gameTimer
 let gameRunning = false
 
 // ! Creating the game grid
+
 for (let i = 0; i < width ** 2; i++) {
   const div = document.createElement('div')
   div.classList.add('cell')
   grid.appendChild(div)
-  // div.innerHTML = i
   cells.push(div)
 }
 
@@ -126,6 +126,7 @@ document.addEventListener('keydown', (event) => {
 })
 
 // ! Moving yellow car - to the right
+
 function carRight() {
   yellowCarInterval = setInterval(() => {
     yellowCar.forEach((carRightMove, i) => {
@@ -182,6 +183,7 @@ function moveLogLeft() {
 }
 
 // ! Moving the frog when it is on the log. 
+
 function frogLogMove() {
   frogOnLog = setInterval(() => {
     if (frog >= 27 && frog < 36 && cells[frog].classList.contains('log')) {
