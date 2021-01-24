@@ -1,19 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./style/welcome.css">
+  <link rel="stylesheet" href="./style/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <title>Frogger</title>
 </head>
 
 <body>
   <div class="logo"></div>
-  <h3 class="easy"><a href="./html/index.html">Standard</a></h3> 
-  <h3 class="hard"><a href="./html/hard.html">Hard</a></h3> 
+  <div class="points">
+    <h3 class="scoreboard"> score: <span class="score">0</span> </h3>
+    <h3 class="liveboard"> lives: <span class="lives">3</span> </h3>
+    <h3 class="timer"> Time Left: 20</h3>
+    <h3 class='highScore'>High Score!</h3>
+  </div>
 
-  <footer>
-  </footer>
+
+  <div class="grid">
+    <h1 class="gameover">GAME OVER</h1>
+  </div>
+
+  <div class='buttons'>
+    <button class="start">Start</button>
+
+    <!-- Trigger/Open The Modal -->
+    <button id="myBtn">How to play</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h4>Family Frogger is lost and needs to find their way back home!</h4>
+        <p>Help Mrs Frogger and the rest of her family make their way back to the lilypads before the time runs out.</p>
+        <p>Remember to look left and right before you cross the road to avoid being hit by traffic.</p>
+        <p>And strangely, this froggy family cannot swim so you'll need to make sure they jump onto the logs to cross
+          the river</p>
+        <p>GOOD LUCK!</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+
 </body>
+
 </html>

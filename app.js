@@ -1,15 +1,15 @@
+// ? DOM ELEMENTS USED
 const grid = document.querySelector('.grid')
 const ScoreBoard = document.querySelector('.score')
 const livesLeft = document.querySelector('.lives')
 const startButton = document.querySelector('.start')
 const gameEndDisplay = document.querySelector('.gameover')
 const timer = document.querySelector('.timer')
+const highScoreDisplay = document.querySelector('.highScore')
+const highScore = JSON.parse(localStorage.getItem('highScore')) || []
 const modal = document.querySelector('#myModal')
 const btn = document.querySelector('#myBtn')
 const span = document.querySelector('.close')
-
-const highScoreDisplay = document.querySelector('.highScore')
-const highScore = JSON.parse(localStorage.getItem('highScore')) || []
 
 const width = 9
 const cells = []
@@ -19,49 +19,42 @@ let lives = 3
 let frog = 76
 let time = 20
 
-const lilypads = [2, 6]
-const logsRight = [20, 19, 25, 24]
-const logsLeft = [29, 30, 32, 33]
-let snake = [43]
-const bike = [47, 50, 53]
-const policeCar = [55, 58, 61]
-const yellowCar = [65, 68, 71]
+const lilypads = [1, 4, 7]
+const logsRight = [25, 24, 23, 21, 20, 19]
+const logsLeft = [27, 28, 29, 31, 32, 34]
+const yellowCar = [55, 58, 61]
+const policeCar = [65, 68, 71]
 const water = [0, 1, 3, 5, 7, 8, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
 const grass = [9, 10, 11, 12, 13, 14, 15, 16, 17, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 72, 73, 74, 75, 76, 77, 78, 79, 80]
-const roadTop = [45, 46, 47, 48, 49, 50, 51, 52, 53]
-const roadMiddle = [54, 55, 56, 57, 58, 59, 60, 61, 62]
-const roadBottom = [63, 64, 65, 66, 67, 68, 69, 70, 71]
+const roadYellow = [54, 55, 56, 57, 58, 59, 60, 61, 62]
+const roadPolice = [63, 64, 65, 66, 67, 68, 69, 70, 71]
 
 let moveLogLeftInterval
 let moveLogRightInterval
-let bikeInterval
 let policeCarInterval
 let yellowCarInterval
 let lilypadInterval
 let frogOnLog
 let gainingPoints
 let gameTimer
-let snakeInterval
 
 let gameRunning = false
 
-// ! Creating the game grid
+// ? CREATING THE GRID
 for (let i = 0; i < width ** 2; i++) {
   const div = document.createElement('div')
   div.classList.add('cell')
   grid.appendChild(div)
-  // div.innerHTML = i
   cells.push(div)
 }
 
-// GAME RENDERING - function 
+// ? GAME RENDERING
 function renderGame() {
   cells.forEach(cell => {
     cell.classList.remove('frog')
     cell.classList.remove('yellowCar')
     cell.classList.remove('policeCar')
     cell.classList.remove('log')
-    cell.classList.remove('bike')
     cell.classList.remove('lilypad')
   })
   cells[frog].classList.add('frog')
@@ -77,17 +70,14 @@ function renderGame() {
   logsLeft.forEach(logTile => {
     cells[logTile].classList.add('log')
   })
-  bike.forEach(bikeTile => {
-    cells[bikeTile].classList.add('bike')
-  })
   lilypads.forEach(lilypadTile => {
     cells[lilypadTile].classList.add('lilypad')
   })
 }
-
-//          SETTING UP THE BOARD 
-// ! Starting placement of grid element - none moving elements that are not in the renderGame function 
 renderGame()
+
+// 
+// ? Starting placement of grid element - none moving elements that are not in the renderGame function 
 
 grass.forEach(grassTile => {
   cells[grassTile].classList.add('grass')
@@ -95,17 +85,27 @@ grass.forEach(grassTile => {
 water.forEach(waterTile => {
   cells[waterTile].classList.add('water')
 })
-roadTop.forEach(roadTile => {
-  cells[roadTile].classList.add('roadTop')
+roadYellow.forEach(roadTile => {
+  cells[roadTile].classList.add('roadYellow')
 })
-roadMiddle.forEach(roadTile => {
-  cells[roadTile].classList.add('roadMiddle')
-})
-roadBottom.forEach(roadTile => {
-  cells[roadTile].classList.add('roadBottom')
+roadPolice.forEach(roadTile => {
+  cells[roadTile].classList.add('roadPolice')
 })
 
-// ! Moving frog around the board
+// ? Modal - open and close 
+btn.addEventListener('click', () => {
+  modal.style.display = 'block'
+})
+span.addEventListener('click', () => {
+  modal.style.display = 'none'
+})
+window.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    modal.style.display = 'none'
+  }
+})
+
+// ? Moving frog around the board
 document.addEventListener('keydown', (event) => {
   if (!gameRunning) {
     return
@@ -119,84 +119,57 @@ document.addEventListener('keydown', (event) => {
       frog -= 1
     } else if (key === 'ArrowRight' && !(frog % width === width - 1)) {
       frog += 1
+      cells[frog].classList.add('frog')
     }
   }
   renderGame()
   gameOver()
 })
 
-// ! Moving the lilypads
-function moveLilypads() {
-  lilypadInterval = setInterval(() => {
-    lilypads.forEach((lilypad, i) => {
-      if (lilypad === 0) {
-        lilypads[i] += 8
-      } else {
-        lilypads[i] -= 1
-      }
-    })
-    renderGame()
-  }, 500)
-}
-
-// ! Moving bike - to the left
-function bikeLeft() {
-  bikeInterval = setInterval(() => {
-    bike.forEach((bikeLeft, i) => {
-      if (bikeLeft === 53) {
-        bike[i] -= 8
-      } else {
-        bike[i] += 1
-      }
-    })
-  }, 500)
-}
-
-
-//  ! Idea for a movement function - would mean do not need individual functions to move traffic & logs etc. 
-// Movement Function
-function movement(callIntervalName, cellArray, rowEnd, rowSize, numMove, time) {
-  callIntervalName = setInterval(() => {
-    cellArray.forEach((cellIndividual, i) => {
-      if (cellIndividual === rowEnd) {
-        cellArray[i] += rowSize
-      } else {
-        cellArray[i] -= numMove
-      }
-    })
-    renderGame()
-  }, time)
-}
-
-// ! Moving police car - to the right 
-// function carRight() {
-//   policeCarInterval = setInterval(() => {
-//     policeCar.forEach((carRightMove, i) => {
-//       if (carRightMove === 54) {
-//         policeCar[i] += 8
-//       } else {
-//         policeCar[i] -= 1
-//       }
-//     })
-//     renderGame()
-//   }, 600)
-// }
-
-// ! Moving yellow car - to the left
-function carLeft() {
+// ? Moving yellow car - to the right
+function carRight() {
   yellowCarInterval = setInterval(() => {
-    yellowCar.forEach((carLeftMove, i) => {
-      if (carLeftMove === 71) {
+    yellowCar.forEach((carRightMove, i) => {
+      if (carRightMove === 62) {
         yellowCar[i] -= 8
       } else {
         yellowCar[i] += 1
       }
     })
     renderGame()
-  }, 700)
+  }, 800)
 }
 
-// ! Moving the logs - to the right
+// ? Moving police car - to the left
+function carLeft() {
+  policeCarInterval = setInterval(() => {
+    policeCar.forEach((carLeftMove, i) => {
+      if (carLeftMove === 63) {
+        policeCar[i] += 8
+      } else {
+        policeCar[i] -= 1
+      }
+    })
+    renderGame()
+  }, 1000)
+}
+
+// ? Moving lilypad
+function lilypadMovement() {
+  lilypadInterval = setInterval(() => {
+    lilypads.forEach((lily, i) => {
+      if (lily === 8) {
+        lilypads[i] -= 8
+      } else {
+        lilypads[i] += 1
+      }
+    })
+    renderGame()
+  }, 800)
+}
+
+
+// ? Moving the logs - to the right
 function moveLogRight() {
   moveLogRightInterval = setInterval(() => {
     logsRight.forEach((log, i) => {
@@ -210,7 +183,7 @@ function moveLogRight() {
   }, 1000)
 }
 
-// ! Moving the logs - to the left 
+// ? Moving the logs - to the left 
 function moveLogLeft() {
   moveLogLeftInterval = setInterval(() => {
     logsLeft.forEach((log, i) => {
@@ -224,7 +197,7 @@ function moveLogLeft() {
   }, 1000)
 }
 
-// ! Moving the frog when it is on the log. 
+// ? Moving the frog when it is on the log. 
 function frogLogMove() {
   frogOnLog = setInterval(() => {
     if (frog >= 27 && frog < 36 && cells[frog].classList.contains('log')) {
@@ -236,59 +209,19 @@ function frogLogMove() {
   }, 999.5)
 }
 
-// ! Function to make the snake randomly appear
-function randomSnake() {
-  snakeInterval = setInterval(() => {
-    cells[snake].classList.remove('snake')
-    snake = grass[Math.floor(Math.random() * grass.length)]
-    cells[snake].classList.add('snake')
-  }, 5000)
-}
-
-// Start Button event listener - starts all movement on the page
-startButton.addEventListener('click', () => {
-  if (gameRunning) {
-    return
-  }
-  gameRunning = true
-
-  // Starting game timer - inside the start button function 
-  gameTimer = setInterval(() => {
-    time = time -= 1
-    timer.innerHTML = `Time left ${time}`
-    if (time === 0) {
-      clearInterval(gameTimer)
-    }
-  }, 1000)
-
-  // Starting all functions to get the game moving, detect crashes & movement
-  bikeLeft()
-  // carRight()
-  movement(policeCarInterval, policeCar, 54, 8, 1, 600)
-  carLeft()
-  moveLogRight()
-  moveLogLeft()
-  frogCrashDetection()
-  gameOver()
-  frogOnLilypad()
-  frogLogMove()
-  moveLilypads()
-  randomSnake()
-})
-
-// Reset the frog to the starting point
+// ? Reset the frog to the starting point
 function resetFrog() {
+  cells[frog].classList.remove('frog')
   frog = 76
+  cells[frog].classList.add('frog')
   frogCrashDetection()
-  renderGame()
 }
 
-// Car crash detection 
+// ? Car crash detection 
 function frogCrashDetection() {
   const frogCarCrash = setInterval(() => {
     if (cells[frog].classList.contains('policeCar')
       || cells[frog].classList.contains('yellowCar')
-      || cells[frog].classList.contains('bike')
       || cells[frog].classList.contains('water') && !cells[frog].classList.contains('log') && !cells[frog].classList.contains('lilypad')) {
       const newLives = lives -= 1
       livesLeft.innerHTML = newLives
@@ -298,7 +231,7 @@ function frogCrashDetection() {
   }, 300)
 }
 
-// Gain points - reaching a lilypad 
+// ? Gain points -if frog reaches a lilypad 
 function frogOnLilypad() {
   gainingPoints = setInterval(() => {
     if (cells[frog].classList.contains('lilypad')) {
@@ -312,7 +245,8 @@ function frogOnLilypad() {
   }, 300)
 }
 
-// Message at the end of the game 
+
+// ? Message at the end of the game 
 function gameDisplay(message, delay) {
   gameEndDisplay.style.display = 'block'
   gameEndDisplay.innerHTML = message
@@ -321,7 +255,7 @@ function gameDisplay(message, delay) {
   }, delay)
 }
 
-// Local Storage  
+// ? Local Storage  
 function saveHighScore() {
   highScore.push(score)
   highScore.sort((a, b) => b.score = a.score)
@@ -329,23 +263,20 @@ function saveHighScore() {
   highScoreDisplay.innerHTML = `Score to beat ${highScore}`
 }
 
-// Game Over Function 
-// Clears all the intervals, resets score, lives & time 
+// ? Game over function - if lives or time reach 0
 function gameOver() {
-  if (lives === 0 || time === 0 || cells[frog].classList.contains('snake')) {
+  if (lives === 0 || time === 0) {
     gameRunning = false
     saveHighScore()
-    gameDisplay(`GAME OVER! <br> You scored ${score} points!`, 3000)
+    gameDisplay(`GAME OVER! <br> You scored ${score} points!`, 10000)
     clearInterval(policeCarInterval)
     clearInterval(yellowCarInterval)
-    clearInterval(bikeInterval)
     clearInterval(lilypadInterval)
     clearInterval(moveLogLeftInterval)
     clearInterval(moveLogRightInterval)
     clearInterval(gainingPoints)
     clearInterval(frogOnLog)
     clearInterval(gameTimer)
-    clearInterval(snakeInterval)
     document.removeEventListener('keydown', event)
 
     score = 0
@@ -358,21 +289,31 @@ function gameOver() {
   }
 }
 
-// ! Modal box - open and close 
-btn.addEventListener('click', () => {
-  modal.style.display = 'block'
-})
-span.addEventListener('click', () => {
-  modal.style.display = 'none'
-})
-window.addEventListener('click', (e) => {
-  if (e.target === modal) {
-    modal.style.display = 'none'
+//? Start Button event listener - starts all movement on the page
+startButton.addEventListener('click', () => {
+  if (gameRunning) {
+    return
   }
+  gameRunning = true
+
+  // Starting game timer
+  gameTimer = setInterval(() => {
+    time = time -= 1
+    timer.innerHTML = `Time left ${time}`
+    if (time === 0) {
+      clearInterval(gameTimer)
+    }
+  }, 1000)
+
+  // Starting all functions
+  carRight()
+  carLeft()
+  moveLogRight()
+  moveLogLeft()
+  frogCrashDetection()
+  gameOver()
+  frogOnLilypad()
+  frogLogMove()
+  renderGame()
+  lilypadMovement()
 })
-
-
-
-
-
-

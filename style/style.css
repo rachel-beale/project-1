@@ -206,17 +206,3 @@ background-size: contain;
   text-decoration: none;
   cursor: pointer;
 }
-
-a:link {
-  text-decoration: none;
-}
-a:visited {
-  color: #050a05;;
-}
-a:hover {
-  color: #96c496;
-  text-decoration: underline;
-}
-a:active {
-  color: red;
-}
